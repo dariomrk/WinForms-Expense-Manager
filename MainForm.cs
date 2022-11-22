@@ -13,5 +13,15 @@ namespace WinForms_Expense_Manager
         {
 
         }
+
+        private void checkBoxFilterDateTime_CheckedChanged(object sender, EventArgs e)
+        {
+            labelFilterFrom.Enabled = checkBoxFilterDateTime.Checked;
+            labelFilterTo.Enabled = checkBoxFilterDateTime.Checked;
+            filterFromDateTime.Enabled = checkBoxFilterDateTime.Checked;
+            filterToDateTime.Enabled = checkBoxFilterDateTime.Checked;
+
+            // TODO Implement the filter functionality.
+        }
     }
 }

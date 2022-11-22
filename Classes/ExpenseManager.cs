@@ -12,7 +12,7 @@ namespace WinForms_Expense_Manager.Classes
     public class ExpenseManager
     {
         #region Fields
-        private readonly string _fileName = "expense-manager-data.json";
+        public readonly string DataFileName = "expense-manager-data.json";
         private List<Entry> _entries = new();
         private Dictionary<Guid, string> _categories = new();
         #endregion
@@ -31,18 +31,6 @@ namespace WinForms_Expense_Manager.Classes
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Populates the Expense Manager instance with the data from the "expense-manager-data.json" file, if available.
-        /// </summary>
-        public ExpenseManager()
-        {
-            var loading = LoadDataAsync();
-            loading.Wait();
-            if (!_categories.ContainsKey(Guid.Empty))
-            {
-                _categories.Add(Guid.Empty, "No category");
-            }
-        }
         #endregion
 
         #region Methods
@@ -89,7 +77,7 @@ namespace WinForms_Expense_Manager.Classes
         /// </summary>
         private async Task SaveDataAsync()
         {
-            using FileStream stream = File.Create(_fileName);
+            using FileStream stream = File.Create(DataFileName);
             await JsonSerializer.SerializeAsync(stream, this, new JsonSerializerOptions { WriteIndented = true });
             await stream.DisposeAsync();
             return;
@@ -99,12 +87,12 @@ namespace WinForms_Expense_Manager.Classes
         /// Asynchronously loads data from a file.
         /// </summary>
         /// <returns>Boolean indicating wether the loading was successful.</returns>
-        private async Task<bool> LoadDataAsync()
+        public async Task<bool> LoadDataAsync()
         {
-            if (!File.Exists(_fileName))
+            if (!File.Exists(DataFileName))
                 return false;
 
-            using FileStream stream = File.OpenRead(_fileName);
+            using FileStream stream = File.OpenRead(DataFileName);
             ExpenseManagerDataSchema? data = await JsonSerializer.DeserializeAsync<ExpenseManagerDataSchema>(stream);
 
             if(data == null || data.Entries == null || data.Categories == null)
@@ -136,6 +124,14 @@ namespace WinForms_Expense_Manager.Classes
             Guid categoryId = Guid.NewGuid();
             _categories.Add(categoryId,categoryName);
             return categoryId;
+        }
+
+        public Entry[] EntriesFromRange(DateTime fromDate, DateTime toDate)
+        {
+            var selected = from s in _entries
+                           where s.CreatedAt > fromDate && s.CreatedAt < toDate
+                           select s;
+            return selected.ToArray();
         }
 
 
