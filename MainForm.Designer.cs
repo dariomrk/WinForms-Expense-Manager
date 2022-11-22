@@ -42,6 +42,7 @@
             this.MinimumSize = new System.Drawing.Size(512, 1024);
             this.Name = "MainForm";
             this.Text = "Expense Manager";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }
