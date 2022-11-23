@@ -12,14 +12,15 @@ namespace WinForms_Expense_Manager
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // Initially populate the listViewEntries with the loaded data
             foreach(var entry in _manager.Entries)
             {
-                listBoxEntries.Items.Add($"{entry.Title} {entry.Value}");
-            }
-
-            foreach(var category in _manager.Categories)
-            {
-                comboBoxCategories.Items.Add($"{category.Value}");
+                var item = new ListViewItem(entry.Title);
+                item.SubItems.Add(entry.Value.ToString());
+                item.SubItems.Add(entry.CreatedAt.ToString());
+                _manager.TryGetCategoryName(entry.CategoryId, out string categoryName);
+                item.SubItems.Add(categoryName);
+                listViewEntries.Items.Add(item);
             }
         }
 
@@ -36,6 +37,16 @@ namespace WinForms_Expense_Manager
         private void saveFileMenuItem_Click(object sender, EventArgs e)
         {
             _manager.SaveData();
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }
