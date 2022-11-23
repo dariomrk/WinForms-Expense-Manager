@@ -31,6 +31,10 @@ namespace WinForms_Expense_Manager.Classes
         #endregion
 
         #region Constructors
+        public ExpenseManager()
+        {
+            _categories.Add(Guid.Empty, "No category");
+        }
         #endregion
 
         #region Methods
@@ -71,35 +75,30 @@ namespace WinForms_Expense_Manager.Classes
             return _categories.TryGetValue(id, out categoryName);
         }
 
-
-        /// <summary>
-        /// Asynchronously saves all data to a file.
-        /// </summary>
-        private async Task SaveDataAsync()
+        public void SaveData()
         {
-            using FileStream stream = File.Create(DataFileName);
-            await JsonSerializer.SerializeAsync(stream, this, new JsonSerializerOptions { WriteIndented = true });
-            await stream.DisposeAsync();
-            return;
+            string data = JsonSerializer.Serialize<ExpenseManager>(this,
+                new JsonSerializerOptions { WriteIndented = true }
+                );
+
+            using StreamWriter sw = new(DataFileName);
+            sw.Write(data);
         }
 
-        /// <summary>
-        /// Asynchronously loads data from a file.
-        /// </summary>
-        /// <returns>Boolean indicating wether the loading was successful.</returns>
-        public async Task<bool> LoadDataAsync()
+        public bool LoadData()
         {
             if (!File.Exists(DataFileName))
                 return false;
+            using StreamReader sr = new(DataFileName);
+            string json = sr.ReadToEnd();
 
-            using FileStream stream = File.OpenRead(DataFileName);
-            ExpenseManagerDataSchema? data = await JsonSerializer.DeserializeAsync<ExpenseManagerDataSchema>(stream);
-
+            ExpenseManagerDataSchema? data = JsonSerializer.Deserialize<ExpenseManagerDataSchema>(json);
             if(data == null || data.Entries == null || data.Categories == null)
+            {
                 return false;
-
+            }
             _entries = new List<Entry>(data.Entries);
-            _categories = new Dictionary<Guid, string>(data.Categories);
+            _categories = new Dictionary<Guid,string>(data.Categories);
             return true;
         }
 

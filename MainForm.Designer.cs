@@ -45,6 +45,14 @@
             this.labelFilterTo = new System.Windows.Forms.Label();
             this.labelFilter = new System.Windows.Forms.Label();
             this.checkBoxFilterDateTime = new System.Windows.Forms.CheckBox();
+            this.radioButtonAll = new System.Windows.Forms.RadioButton();
+            this.radioButtonIncome = new System.Windows.Forms.RadioButton();
+            this.radioButtonExpenses = new System.Windows.Forms.RadioButton();
+            this.labelFilterByType = new System.Windows.Forms.Label();
+            this.labelFilterByCategory = new System.Windows.Forms.Label();
+            this.comboBoxCategories = new System.Windows.Forms.ComboBox();
+            this.labelActions = new System.Windows.Forms.Label();
+            this.buttonAddNewEntry = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,6 +80,7 @@
             this.saveFileMenuItem.Name = "saveFileMenuItem";
             this.saveFileMenuItem.Size = new System.Drawing.Size(98, 22);
             this.saveFileMenuItem.Text = "Save";
+            this.saveFileMenuItem.Click += new System.EventHandler(this.saveFileMenuItem_Click);
             // 
             // categoriesMenu
             // 
@@ -128,13 +137,13 @@
             this.listBoxEntries.ItemHeight = 15;
             this.listBoxEntries.Location = new System.Drawing.Point(12, 27);
             this.listBoxEntries.Name = "listBoxEntries";
-            this.listBoxEntries.Size = new System.Drawing.Size(244, 949);
+            this.listBoxEntries.Size = new System.Drawing.Size(244, 409);
             this.listBoxEntries.TabIndex = 1;
             // 
             // filterFromDateTime
             // 
             this.filterFromDateTime.Enabled = false;
-            this.filterFromDateTime.Location = new System.Drawing.Point(263, 99);
+            this.filterFromDateTime.Location = new System.Drawing.Point(263, 91);
             this.filterFromDateTime.Name = "filterFromDateTime";
             this.filterFromDateTime.Size = new System.Drawing.Size(222, 23);
             this.filterFromDateTime.TabIndex = 0;
@@ -143,7 +152,7 @@
             // filterToDateTime
             // 
             this.filterToDateTime.Enabled = false;
-            this.filterToDateTime.Location = new System.Drawing.Point(263, 143);
+            this.filterToDateTime.Location = new System.Drawing.Point(263, 135);
             this.filterToDateTime.Name = "filterToDateTime";
             this.filterToDateTime.Size = new System.Drawing.Size(222, 23);
             this.filterToDateTime.TabIndex = 2;
@@ -153,7 +162,7 @@
             // 
             this.labelFilterFrom.AutoSize = true;
             this.labelFilterFrom.Enabled = false;
-            this.labelFilterFrom.Location = new System.Drawing.Point(274, 81);
+            this.labelFilterFrom.Location = new System.Drawing.Point(274, 73);
             this.labelFilterFrom.Name = "labelFilterFrom";
             this.labelFilterFrom.Size = new System.Drawing.Size(65, 15);
             this.labelFilterFrom.TabIndex = 3;
@@ -163,7 +172,7 @@
             // 
             this.labelFilterTo.AutoSize = true;
             this.labelFilterTo.Enabled = false;
-            this.labelFilterTo.Location = new System.Drawing.Point(274, 125);
+            this.labelFilterTo.Location = new System.Drawing.Point(274, 117);
             this.labelFilterTo.Name = "labelFilterTo";
             this.labelFilterTo.Size = new System.Drawing.Size(50, 15);
             this.labelFilterTo.TabIndex = 4;
@@ -173,7 +182,7 @@
             // 
             this.labelFilter.AutoSize = true;
             this.labelFilter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelFilter.Location = new System.Drawing.Point(263, 27);
+            this.labelFilter.Location = new System.Drawing.Point(262, 27);
             this.labelFilter.Name = "labelFilter";
             this.labelFilter.Size = new System.Drawing.Size(52, 21);
             this.labelFilter.TabIndex = 5;
@@ -182,7 +191,7 @@
             // checkBoxFilterDateTime
             // 
             this.checkBoxFilterDateTime.AutoSize = true;
-            this.checkBoxFilterDateTime.Location = new System.Drawing.Point(263, 59);
+            this.checkBoxFilterDateTime.Location = new System.Drawing.Point(263, 51);
             this.checkBoxFilterDateTime.Name = "checkBoxFilterDateTime";
             this.checkBoxFilterDateTime.Size = new System.Drawing.Size(114, 19);
             this.checkBoxFilterDateTime.TabIndex = 6;
@@ -190,11 +199,96 @@
             this.checkBoxFilterDateTime.UseVisualStyleBackColor = true;
             this.checkBoxFilterDateTime.CheckedChanged += new System.EventHandler(this.checkBoxFilterDateTime_CheckedChanged);
             // 
+            // radioButtonAll
+            // 
+            this.radioButtonAll.AutoSize = true;
+            this.radioButtonAll.Checked = true;
+            this.radioButtonAll.Location = new System.Drawing.Point(267, 191);
+            this.radioButtonAll.Name = "radioButtonAll";
+            this.radioButtonAll.Size = new System.Drawing.Size(39, 19);
+            this.radioButtonAll.TabIndex = 7;
+            this.radioButtonAll.TabStop = true;
+            this.radioButtonAll.Text = "All";
+            this.radioButtonAll.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonIncome
+            // 
+            this.radioButtonIncome.AutoSize = true;
+            this.radioButtonIncome.Location = new System.Drawing.Point(312, 191);
+            this.radioButtonIncome.Name = "radioButtonIncome";
+            this.radioButtonIncome.Size = new System.Drawing.Size(65, 19);
+            this.radioButtonIncome.TabIndex = 8;
+            this.radioButtonIncome.Text = "Income";
+            this.radioButtonIncome.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonExpenses
+            // 
+            this.radioButtonExpenses.AutoSize = true;
+            this.radioButtonExpenses.Location = new System.Drawing.Point(383, 191);
+            this.radioButtonExpenses.Name = "radioButtonExpenses";
+            this.radioButtonExpenses.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonExpenses.TabIndex = 9;
+            this.radioButtonExpenses.Text = "Expenses";
+            this.radioButtonExpenses.UseVisualStyleBackColor = true;
+            // 
+            // labelFilterByType
+            // 
+            this.labelFilterByType.AutoSize = true;
+            this.labelFilterByType.Location = new System.Drawing.Point(263, 173);
+            this.labelFilterByType.Name = "labelFilterByType";
+            this.labelFilterByType.Size = new System.Drawing.Size(78, 15);
+            this.labelFilterByType.TabIndex = 10;
+            this.labelFilterByType.Text = "Filter by type:";
+            // 
+            // labelFilterByCategory
+            // 
+            this.labelFilterByCategory.AutoSize = true;
+            this.labelFilterByCategory.Location = new System.Drawing.Point(265, 223);
+            this.labelFilterByCategory.Name = "labelFilterByCategory";
+            this.labelFilterByCategory.Size = new System.Drawing.Size(101, 15);
+            this.labelFilterByCategory.TabIndex = 11;
+            this.labelFilterByCategory.Text = "Filter by category:";
+            // 
+            // comboBoxCategories
+            // 
+            this.comboBoxCategories.FormattingEnabled = true;
+            this.comboBoxCategories.Location = new System.Drawing.Point(265, 241);
+            this.comboBoxCategories.Name = "comboBoxCategories";
+            this.comboBoxCategories.Size = new System.Drawing.Size(217, 23);
+            this.comboBoxCategories.TabIndex = 12;
+            // 
+            // labelActions
+            // 
+            this.labelActions.AutoSize = true;
+            this.labelActions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelActions.Location = new System.Drawing.Point(262, 345);
+            this.labelActions.Name = "labelActions";
+            this.labelActions.Size = new System.Drawing.Size(61, 21);
+            this.labelActions.TabIndex = 13;
+            this.labelActions.Text = "Actions";
+            // 
+            // buttonAddNewEntry
+            // 
+            this.buttonAddNewEntry.Location = new System.Drawing.Point(267, 369);
+            this.buttonAddNewEntry.Name = "buttonAddNewEntry";
+            this.buttonAddNewEntry.Size = new System.Drawing.Size(217, 57);
+            this.buttonAddNewEntry.TabIndex = 14;
+            this.buttonAddNewEntry.Text = "Add new entry";
+            this.buttonAddNewEntry.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(496, 985);
+            this.ClientSize = new System.Drawing.Size(496, 446);
+            this.Controls.Add(this.buttonAddNewEntry);
+            this.Controls.Add(this.labelActions);
+            this.Controls.Add(this.comboBoxCategories);
+            this.Controls.Add(this.labelFilterByCategory);
+            this.Controls.Add(this.labelFilterByType);
+            this.Controls.Add(this.radioButtonExpenses);
+            this.Controls.Add(this.radioButtonIncome);
+            this.Controls.Add(this.radioButtonAll);
             this.Controls.Add(this.checkBoxFilterDateTime);
             this.Controls.Add(this.labelFilter);
             this.Controls.Add(this.labelFilterTo);
@@ -206,9 +300,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(512, 1024);
+            this.MaximumSize = new System.Drawing.Size(512, 485);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(512, 1024);
+            this.MinimumSize = new System.Drawing.Size(512, 485);
             this.Name = "MainForm";
             this.Text = "Expense Manager";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -238,5 +332,13 @@
         private Label labelFilterTo;
         private Label labelFilter;
         private CheckBox checkBoxFilterDateTime;
+        private RadioButton radioButtonAll;
+        private RadioButton radioButtonIncome;
+        private RadioButton radioButtonExpenses;
+        private Label labelFilterByType;
+        private Label labelFilterByCategory;
+        private ComboBox comboBoxCategories;
+        private Label labelActions;
+        private Button buttonAddNewEntry;
     }
 }
