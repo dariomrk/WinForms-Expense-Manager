@@ -38,7 +38,6 @@
             this.moreMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsMoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listBoxEntries = new System.Windows.Forms.ListBox();
             this.filterFromDateTime = new System.Windows.Forms.DateTimePicker();
             this.filterToDateTime = new System.Windows.Forms.DateTimePicker();
             this.labelFilterFrom = new System.Windows.Forms.Label();
@@ -53,6 +52,7 @@
             this.comboBoxCategories = new System.Windows.Forms.ComboBox();
             this.labelActions = new System.Windows.Forms.Label();
             this.buttonAddNewEntry = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -130,15 +130,6 @@
             this.optionsMoreMenuItem.Name = "optionsMoreMenuItem";
             this.optionsMoreMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsMoreMenuItem.Text = "Options";
-            // 
-            // listBoxEntries
-            // 
-            this.listBoxEntries.FormattingEnabled = true;
-            this.listBoxEntries.ItemHeight = 15;
-            this.listBoxEntries.Location = new System.Drawing.Point(12, 27);
-            this.listBoxEntries.Name = "listBoxEntries";
-            this.listBoxEntries.Size = new System.Drawing.Size(244, 409);
-            this.listBoxEntries.TabIndex = 1;
             // 
             // filterFromDateTime
             // 
@@ -276,11 +267,20 @@
             this.buttonAddNewEntry.Text = "Add new entry";
             this.buttonAddNewEntry.UseVisualStyleBackColor = true;
             // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(12, 27);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(244, 409);
+            this.listView1.TabIndex = 15;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(496, 446);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.buttonAddNewEntry);
             this.Controls.Add(this.labelActions);
             this.Controls.Add(this.comboBoxCategories);
@@ -295,7 +295,6 @@
             this.Controls.Add(this.labelFilterFrom);
             this.Controls.Add(this.filterToDateTime);
             this.Controls.Add(this.filterFromDateTime);
-            this.Controls.Add(this.listBoxEntries);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
@@ -325,7 +324,6 @@
         private ToolStripMenuItem moreMenu;
         private ToolStripMenuItem exportMoreMenuItem;
         private ToolStripMenuItem optionsMoreMenuItem;
-        private ListBox listBoxEntries;
         private DateTimePicker filterFromDateTime;
         private DateTimePicker filterToDateTime;
         private Label labelFilterFrom;
@@ -340,5 +338,6 @@
         private ComboBox comboBoxCategories;
         private Label labelActions;
         private Button buttonAddNewEntry;
+        private ListView listView1;
     }
 }

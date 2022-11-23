@@ -12,15 +12,7 @@ namespace WinForms_Expense_Manager
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            foreach(var entry in _manager.Entries)
-            {
-                listBoxEntries.Items.Add($"{entry.Title} {entry.Value}");
-            }
-
-            foreach(var category in _manager.Categories)
-            {
-                comboBoxCategories.Items.Add($"{category.Value}");
-            }
+            
         }
 
         private void checkBoxFilterDateTime_CheckedChanged(object sender, EventArgs e)
