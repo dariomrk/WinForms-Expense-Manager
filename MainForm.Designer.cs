@@ -275,6 +275,7 @@
             this.buttonAddNewEntry.TabIndex = 14;
             this.buttonAddNewEntry.Text = "Add new entry";
             this.buttonAddNewEntry.UseVisualStyleBackColor = true;
+            this.buttonAddNewEntry.Click += new System.EventHandler(this.buttonAddNewEntry_Click);
             // 
             // listViewEntries
             // 

@@ -1,3 +1,5 @@
+using WinForms_Expense_Manager.Forms;
+
 namespace WinForms_Expense_Manager
 {
     public partial class MainForm : Form
@@ -47,6 +49,12 @@ namespace WinForms_Expense_Manager
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
+        }
+
+        private void buttonAddNewEntry_Click(object sender, EventArgs e)
+        {
+            var addNewEntryForm = new AddNewEntryForm();
+            addNewEntryForm.Show();
         }
     }
 }
