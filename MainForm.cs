@@ -228,7 +228,9 @@ namespace WinForms_Expense_Manager
         // TODO Move later
         private void showDescriptionMenuItem_Click(object sender, EventArgs e)
         {
-
+            Guid id = (Guid)listViewEntries.SelectedItems[0].Tag;
+            ShowDescriptionForm showDescriptionForm = new(_manager, id);
+            showDescriptionForm.ShowDialog();
         }
     }
 }
