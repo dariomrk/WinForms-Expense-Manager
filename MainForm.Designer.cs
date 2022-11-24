@@ -60,11 +60,11 @@
             this.columnHeaderDate = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderCategory = new System.Windows.Forms.ColumnHeader();
             this.contextMenuStripEntry = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showDescriptionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelSummary = new System.Windows.Forms.Label();
             this.labelVisibleSummary = new System.Windows.Forms.Label();
-            this.showDescriptionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.contextMenuStripEntry.SuspendLayout();
             this.SuspendLayout();
@@ -92,14 +92,16 @@
             // saveAsFileMenuItem
             // 
             this.saveAsFileMenuItem.Name = "saveAsFileMenuItem";
-            this.saveAsFileMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveAsFileMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsFileMenuItem.Text = "Save as";
+            this.saveAsFileMenuItem.Click += new System.EventHandler(this.saveAsFileMenuItem_Click);
             // 
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.openMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openMenuItem.Text = "Open";
+            this.openMenuItem.Click += new System.EventHandler(this.openMenuItem_Click);
             // 
             // categoriesMenu
             // 
@@ -341,22 +343,30 @@
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEntry.Name = "contextMenuStripEntry";
-            this.contextMenuStripEntry.Size = new System.Drawing.Size(181, 92);
+            this.contextMenuStripEntry.Size = new System.Drawing.Size(166, 70);
             this.contextMenuStripEntry.Text = "Entry Context Menu";
             this.contextMenuStripEntry.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripEntry_Opening);
+            // 
+            // showDescriptionMenuItem
+            // 
+            this.showDescriptionMenuItem.Name = "showDescriptionMenuItem";
+            this.showDescriptionMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.showDescriptionMenuItem.Text = "Show description";
+            this.showDescriptionMenuItem.Click += new System.EventHandler(this.showDescriptionMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // labelSummary
             // 
@@ -375,13 +385,6 @@
             this.labelVisibleSummary.Size = new System.Drawing.Size(102, 15);
             this.labelVisibleSummary.TabIndex = 17;
             this.labelVisibleSummary.Text = "Filtered summary:";
-            // 
-            // showDescriptionMenuItem
-            // 
-            this.showDescriptionMenuItem.Name = "showDescriptionMenuItem";
-            this.showDescriptionMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.showDescriptionMenuItem.Text = "Show description";
-            this.showDescriptionMenuItem.Click += new System.EventHandler(this.showDescriptionMenuItem_Click);
             // 
             // MainForm
             // 

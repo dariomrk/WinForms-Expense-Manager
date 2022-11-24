@@ -99,6 +99,16 @@ namespace WinForms_Expense_Manager.Classes
             sw.Write(data);
         }
 
+        public void SaveDataTo(string path)
+        {
+            string data = JsonSerializer.Serialize<ExpenseManager>(this,
+                new JsonSerializerOptions { WriteIndented = true }
+                );
+
+            using StreamWriter sw = new(path);
+            sw.Write(data);
+        }
+
         public bool LoadData()
         {
             if (!File.Exists(DataFileName))
@@ -113,6 +123,24 @@ namespace WinForms_Expense_Manager.Classes
             }
             _entries = new List<Entry>(data.Entries);
             _categories = new Dictionary<Guid,string>(data.Categories);
+            CurrencySign = data.CurrencySign;
+            return true;
+        }
+
+        public bool LoadDataFrom(string path)
+        {
+            if (!File.Exists(path))
+                return false;
+            using StreamReader sr = new(path);
+            string json = sr.ReadToEnd();
+
+            ExpenseManagerDataSchema? data = JsonSerializer.Deserialize<ExpenseManagerDataSchema>(json);
+            if (data == null || data.Entries == null || data.Categories == null || data.CurrencySign == null)
+            {
+                return false;
+            }
+            _entries = new List<Entry>(data.Entries);
+            _categories = new Dictionary<Guid, string>(data.Categories);
             CurrencySign = data.CurrencySign;
             return true;
         }

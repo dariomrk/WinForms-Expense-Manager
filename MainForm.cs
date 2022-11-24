@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 using WinForms_Expense_Manager.Classes;
 using WinForms_Expense_Manager.Forms;
 
@@ -32,7 +33,7 @@ namespace WinForms_Expense_Manager
         private (decimal Income, decimal Expense) CalculateTotal(List<Entry> entries)
         {
             decimal income = 0, expense = 0;
-            foreach(var e in entries)
+            foreach (var e in entries)
             {
                 if (e.IsIncome)
                 {
@@ -101,6 +102,9 @@ namespace WinForms_Expense_Manager
         private void PopulateListViewEntries()
         {
             List<Entry> entries = ApplyFilters();
+
+            // Sort by date of creation
+            entries.Sort((e1, e2) => e1.CreatedAt.CompareTo(e2.CreatedAt));
 
             listViewEntries.Items.Clear();
             for (int i = entries.Count-1; i>=0; i--)
@@ -221,16 +225,79 @@ namespace WinForms_Expense_Manager
             UpdateAll();
             _manager.SaveData();
         }
-        #endregion
 
-        #endregion
-
-        // TODO Move later
         private void showDescriptionMenuItem_Click(object sender, EventArgs e)
         {
             Guid id = (Guid)listViewEntries.SelectedItems[0].Tag;
             ShowDescriptionForm showDescriptionForm = new(_manager, id);
             showDescriptionForm.ShowDialog();
         }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you really want to delete this entry?",
+                "Warning",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
+            _manager.RemoveEntry((Guid)listViewEntries.SelectedItems[0].Tag);
+            UpdateAll();
+            _manager.SaveData();
+        }
+
+        private void saveAsFileMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new()
+            {
+                InitialDirectory = Environment.CurrentDirectory,
+                Filter = "json files (*.json) | *.json",
+                FileName = "expense-manager-data.json",
+                OverwritePrompt = true,
+                AddExtension = true,
+                DefaultExt = ".json",
+                Title = "Save file"
+            };
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                _manager.SaveDataTo(saveFileDialog.FileName);
+                MessageBox.Show($"Successfully saved file to: {saveFileDialog.FileName}.",
+                "Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+                );
+            }
+            UpdateAll();
+        }
+
+        private void openMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new()
+            {
+                InitialDirectory = Environment.CurrentDirectory,
+                Filter = "json files (*.json) | *.json",
+                FileName = "expense-manager-data.json",
+                AddExtension = true,
+                DefaultExt = ".json",
+                Title = "Open file"
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                _manager.LoadDataFrom(openFileDialog.FileName);
+                MessageBox.Show($"Successfully loaded data from: {openFileDialog.FileName}.",
+                "Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+                );
+            }
+            UpdateAll();
+        }
+        #endregion
+
+        #endregion
     }
 }
