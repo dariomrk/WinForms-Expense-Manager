@@ -11,7 +11,8 @@ namespace WinForms_Expense_Manager.Classes
     public class ExpenseManager
     {
         #region Fields
-        public readonly string DataFileName = "expense-manager-data.json";
+        public readonly string DefaultDataFilePath = "default-expense-manager-data.json";
+        private string _workingDataFilePath;
         private List<Entry> _entries = new();
         private Dictionary<Guid, string> _categories = new()
         {
@@ -42,12 +43,15 @@ namespace WinForms_Expense_Manager.Classes
                 _currencySign = value;
             }
         }
+
+        [JsonIgnore]
+        public string WorkingDataFilePath { get => _workingDataFilePath; }
         #endregion
 
         #region Constructors
         public ExpenseManager()
         {
-
+            _workingDataFilePath = DefaultDataFilePath;
         }
         #endregion
 
@@ -95,7 +99,7 @@ namespace WinForms_Expense_Manager.Classes
                 new JsonSerializerOptions { WriteIndented = true }
                 );
 
-            using StreamWriter sw = new(DataFileName);
+            using StreamWriter sw = new(_workingDataFilePath);
             sw.Write(data);
         }
 
@@ -111,9 +115,9 @@ namespace WinForms_Expense_Manager.Classes
 
         public bool LoadData()
         {
-            if (!File.Exists(DataFileName))
+            if (!File.Exists(_workingDataFilePath))
                 return false;
-            using StreamReader sr = new(DataFileName);
+            using StreamReader sr = new(_workingDataFilePath);
             string json = sr.ReadToEnd();
 
             ExpenseManagerDataSchema? data = JsonSerializer.Deserialize<ExpenseManagerDataSchema>(json);
@@ -131,6 +135,7 @@ namespace WinForms_Expense_Manager.Classes
         {
             if (!File.Exists(path))
                 return false;
+            _workingDataFilePath = path;
             using StreamReader sr = new(path);
             string json = sr.ReadToEnd();
 

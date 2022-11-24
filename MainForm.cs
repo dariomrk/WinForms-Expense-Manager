@@ -99,6 +99,16 @@ namespace WinForms_Expense_Manager
         #endregion
 
         #region UI Utilities
+        private void UpdateTitle()
+        {
+            if(_manager.DefaultDataFilePath != _manager.WorkingDataFilePath)
+            {
+                Text = $"Expense Manager @ {_manager.WorkingDataFilePath}";
+                return;
+            }
+            Text = "Expense Manager";
+        }
+
         private void PopulateListViewEntries()
         {
             List<Entry> entries = ApplyFilters();
@@ -272,6 +282,7 @@ namespace WinForms_Expense_Manager
                 );
             }
             UpdateAll();
+            UpdateTitle();
         }
 
         private void openMenuItem_Click(object sender, EventArgs e)
@@ -295,6 +306,7 @@ namespace WinForms_Expense_Manager
                 );
             }
             UpdateAll();
+            UpdateTitle();
         }
         #endregion
 
