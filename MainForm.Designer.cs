@@ -64,6 +64,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelSummary = new System.Windows.Forms.Label();
             this.labelVisibleSummary = new System.Windows.Forms.Label();
+            this.showDescriptionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.contextMenuStripEntry.SuspendLayout();
             this.SuspendLayout();
@@ -336,10 +337,11 @@
             // contextMenuStripEntry
             // 
             this.contextMenuStripEntry.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showDescriptionMenuItem,
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEntry.Name = "contextMenuStripEntry";
-            this.contextMenuStripEntry.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStripEntry.Size = new System.Drawing.Size(181, 92);
             this.contextMenuStripEntry.Text = "Entry Context Menu";
             this.contextMenuStripEntry.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripEntry_Opening);
             // 
@@ -348,6 +350,7 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
@@ -372,6 +375,13 @@
             this.labelVisibleSummary.Size = new System.Drawing.Size(102, 15);
             this.labelVisibleSummary.TabIndex = 17;
             this.labelVisibleSummary.Text = "Filtered summary:";
+            // 
+            // showDescriptionMenuItem
+            // 
+            this.showDescriptionMenuItem.Name = "showDescriptionMenuItem";
+            this.showDescriptionMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showDescriptionMenuItem.Text = "Show description";
+            this.showDescriptionMenuItem.Click += new System.EventHandler(this.showDescriptionMenuItem_Click);
             // 
             // MainForm
             // 
@@ -401,7 +411,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Expense Manager";
+            this.Text = "Expense manager";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -448,5 +458,6 @@
         private ToolStripMenuItem openMenuItem;
         private Label labelSummary;
         private Label labelVisibleSummary;
+        private ToolStripMenuItem showDescriptionMenuItem;
     }
 }

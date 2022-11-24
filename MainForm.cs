@@ -28,23 +28,7 @@ namespace WinForms_Expense_Manager
         }
         #endregion
 
-        private List<Entry> ApplyFilters()
-        {
-            List<Entry> output = new();
-            foreach (var entry in _manager.Entries)
-            {
-                bool pass = true;
-                foreach (var filter in _filters)
-                {
-                    pass = pass && filter(entry);
-                }
-                if (pass)
-                    output.Add(entry);
-            }
-            _visibleTotal = CalculateTotal(output);
-            UpdateVisibleSummary();
-            return output;
-        }
+        #region Methods
         private (decimal Income, decimal Expense) CalculateTotal(List<Entry> entries)
         {
             decimal income = 0, expense = 0;
@@ -63,6 +47,24 @@ namespace WinForms_Expense_Manager
         }
 
         #region Filter Methods
+        private List<Entry> ApplyFilters()
+        {
+            List<Entry> output = new();
+            foreach (var entry in _manager.Entries)
+            {
+                bool pass = true;
+                foreach (var filter in _filters)
+                {
+                    pass = pass && filter(entry);
+                }
+                if (pass)
+                    output.Add(entry);
+            }
+            _visibleTotal = CalculateTotal(output);
+            UpdateVisibleSummary();
+            return output;
+        }
+
         private bool DateRangeFilter(Entry e)
         {
             if (!checkBoxFilterDateTime.Checked)
@@ -109,6 +111,7 @@ namespace WinForms_Expense_Manager
                 item.SubItems.Add(entry.CreatedAt.ToString());
                 _manager.TryGetCategoryName(entry.CategoryId, out string categoryName);
                 item.SubItems.Add(categoryName);
+                item.Tag = entry.Id;
                 listViewEntries.Items.Add(item);
             }
         }
@@ -128,6 +131,13 @@ namespace WinForms_Expense_Manager
                 $"\u25b2{_visibleTotal.Income}{_manager.CurrencySign}   " +
                 $"\u03a3 {_visibleTotal.Income + _visibleTotal.Expense}{_manager.CurrencySign}";
         }
+
+        private void UpdateAll()
+        {
+            PopulateListViewEntries();
+            _total = CalculateTotal(_manager.Entries);
+            UpdateSummary();
+        }
         #endregion
 
         #region Events
@@ -142,11 +152,7 @@ namespace WinForms_Expense_Manager
             filterFromDateTime.Value = new DateTime(DateTime.UtcNow.AddMonths(-1).Ticks);
             filterToDateTime.Value = new DateTime(DateTime.UtcNow.Ticks);
 
-            // Initially populate the listViewEntries
-            PopulateListViewEntries();
-            // Initially set up summary
-            _total = CalculateTotal(_manager.Entries);
-            UpdateSummary();
+            UpdateAll();
         }
 
         private void checkBoxFilterDateTime_CheckedChanged(object sender, EventArgs e)
@@ -163,8 +169,8 @@ namespace WinForms_Expense_Manager
         {
             var addNewEntryForm = new AddNewEntryForm(_manager);
             addNewEntryForm.ShowDialog();
-            PopulateListViewEntries();
-            UpdateSummary();
+            UpdateAll();
+            _manager.SaveData();
         }
 
         private void comboBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -199,9 +205,30 @@ namespace WinForms_Expense_Manager
 
         private void contextMenuStripEntry_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(listViewEntries.SelectedItems.Count < 1) e.Cancel = true;
+            if (listViewEntries.SelectedItems.Count < 1)
+            {
+                e.Cancel = true;
+                return;
+            }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Guid id = (Guid)listViewEntries.SelectedItems[0].Tag;
+
+            EditExistingEntryForm editExistingEntryForm = new(_manager, id);
+            editExistingEntryForm.ShowDialog();
+            UpdateAll();
+            _manager.SaveData();
         }
         #endregion
 
+        #endregion
+
+        // TODO Move later
+        private void showDescriptionMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

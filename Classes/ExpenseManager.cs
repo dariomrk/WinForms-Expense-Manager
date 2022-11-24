@@ -117,17 +117,17 @@ namespace WinForms_Expense_Manager.Classes
             return true;
         }
 
-        public void AddTask(Entry e)
+        public void AddEntry(Entry e)
         {
             if(!_categories.ContainsKey(e.CategoryId))
                 throw new ArgumentException("Category ID is not registered within the Expense Manager instance.");
             _entries.Add(e);
         }
 
-        public Guid AddNewTask(string title, string description, decimal value)
+        public Guid AddNewEntry(string title, string description, decimal value)
         {
             Entry e = new(title, description, value);
-            AddTask(e);
+            AddEntry(e);
             return e.Id;
         }
 
@@ -139,16 +139,26 @@ namespace WinForms_Expense_Manager.Classes
             _categories.Add(categoryId,categoryName);
             return categoryId;
         }
-
-        public Entry[] EntriesFromRange(DateTime fromDate, DateTime toDate)
+        
+        public bool TryFindEntry(Guid id, out Entry e)
         {
-            var selected = from s in _entries
-                           where s.CreatedAt > fromDate && s.CreatedAt < toDate
-                           select s;
-            return selected.ToArray();
+            e = null;
+            foreach(var entry in _entries)
+            {
+                if(entry.Id == id)
+                {
+                    e = entry;
+                    return true;
+                }
+            }
+            return false;
         }
 
-
+        public bool RemoveEntry(Guid id)
+        {
+            TryFindEntry(id, out Entry e);
+            return _entries.Remove(e);
+        }
         #endregion
     }
 }

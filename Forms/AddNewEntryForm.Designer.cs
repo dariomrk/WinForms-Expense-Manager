@@ -133,7 +133,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddNewEntryForm";
-            this.Text = "Add New Entry";
+            this.Text = "Add new entry";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.AddNewEntryForm_Load);
             this.ResumeLayout(false);

@@ -10,23 +10,20 @@ using System.Windows.Forms;
 
 namespace WinForms_Expense_Manager.Forms
 {
-    public partial class AddNewEntryForm : Form
+    public partial class EditExistingEntryForm : Form
     {
         Classes.ExpenseManager _manager;
-        public AddNewEntryForm(Classes.ExpenseManager manager)
+        Guid _entryId;
+        Classes.Entry _editEntry;
+        public EditExistingEntryForm(Classes.ExpenseManager manager, Guid entryId)
         {
             _manager=manager;
+            _entryId = entryId;
+            _manager.TryFindEntry(_entryId, out _editEntry);
             InitializeComponent();
         }
 
-        private void AddNewEntryForm_Load(object sender, EventArgs e)
-        {
-            // Initially populate the comboBoxCategories
-            comboBoxCategories.Items.AddRange(_manager.Categories.Values.ToArray());
-            comboBoxCategories.SelectedIndex = 0;
-        }
-
-        private void buttonAddNewEntry_Click(object sender, EventArgs e)
+        private void buttonEditExistingEntry_Click(object sender, EventArgs e)
         {
             string title = textBoxTitle.Text;
             string description = textBoxDescription.Text;
@@ -42,7 +39,7 @@ namespace WinForms_Expense_Manager.Forms
                 return;
             }
 
-            if(!decimal.TryParse(value, out parsedValue))
+            if (!decimal.TryParse(value, out parsedValue))
             {
                 MessageBox.Show("Value must be a number!\nPlease try again.",
                     "Error",
@@ -51,13 +48,13 @@ namespace WinForms_Expense_Manager.Forms
                 return;
             }
 
-            if(comboBoxCategories.SelectedIndex == 0)
+            if (comboBoxCategories.SelectedIndex == 0)
             {
                 DialogResult result = MessageBox.Show("You are about to save the entry with no category.\nAre you sure?",
                     "Confirmation",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
-                if(result == DialogResult.No)
+                if (result == DialogResult.No)
                 {
                     return;
                 }
@@ -65,10 +62,31 @@ namespace WinForms_Expense_Manager.Forms
 
             Guid categoryId;
             _manager.TryGetCategoryId(comboBoxCategories.SelectedItem.ToString(), out categoryId);
-            Classes.Entry entry = new(title,description,parsedValue);
-            entry.CategoryId = categoryId;
+            Classes.Entry entry = new(_editEntry.Id,_editEntry.CreatedAt,title, description, parsedValue,categoryId);
+            _manager.RemoveEntry(_editEntry.Id);
             _manager.AddEntry(entry);
             Close();
         }
+
+        private void EditExistingEntryForm_Load(object sender, EventArgs e)
+        {
+            // Initially populate the comboBoxCategories
+            comboBoxCategories.Items.AddRange(_manager.Categories.Values.ToArray());
+            _manager.TryGetCategoryName(_editEntry.CategoryId,out string categoryName);
+            for (int i = 0; i < comboBoxCategories.Items.Count; i++)
+            {
+                if (comboBoxCategories.Items[i].ToString() == categoryName)
+                {
+                    comboBoxCategories.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            // Populate other fields by info from Entry
+            textBoxTitle.Text = _editEntry.Title;
+            textBoxDescription.Text = _editEntry.Description;
+            textBoxValue.Text = _editEntry.Value.ToString();
+        }
+
     }
 }
