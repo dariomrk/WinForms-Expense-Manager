@@ -31,7 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoriesMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.addCategoriesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editCategoriesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,17 +80,23 @@
             // fileMenu
             // 
             this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveFileMenuItem});
+            this.saveAsFileMenuItem,
+            this.openMenuItem});
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(37, 20);
             this.fileMenu.Text = "File";
             // 
-            // saveFileMenuItem
+            // saveAsFileMenuItem
             // 
-            this.saveFileMenuItem.Name = "saveFileMenuItem";
-            this.saveFileMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.saveFileMenuItem.Text = "Save";
-            this.saveFileMenuItem.Click += new System.EventHandler(this.saveFileMenuItem_Click);
+            this.saveAsFileMenuItem.Name = "saveAsFileMenuItem";
+            this.saveAsFileMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveAsFileMenuItem.Text = "Save as";
+            // 
+            // openMenuItem
+            // 
+            this.openMenuItem.Name = "openMenuItem";
+            this.openMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.openMenuItem.Text = "Open";
             // 
             // categoriesMenu
             // 
@@ -147,7 +154,8 @@
             this.filterFromDateTime.Name = "filterFromDateTime";
             this.filterFromDateTime.Size = new System.Drawing.Size(222, 23);
             this.filterFromDateTime.TabIndex = 0;
-            this.filterFromDateTime.Value = new System.DateTime(2022, 10, 22, 19, 21, 46, 790);
+            this.filterFromDateTime.Value = new System.DateTime(DateTime.UtcNow.AddMonths(-1).Ticks);
+            this.filterFromDateTime.ValueChanged += new System.EventHandler(this.filterFromDateTime_ValueChanged);
             // 
             // filterToDateTime
             // 
@@ -156,7 +164,8 @@
             this.filterToDateTime.Name = "filterToDateTime";
             this.filterToDateTime.Size = new System.Drawing.Size(222, 23);
             this.filterToDateTime.TabIndex = 2;
-            this.filterToDateTime.Value = new System.DateTime(2022, 11, 22, 19, 21, 46, 791);
+            this.filterToDateTime.Value = new System.DateTime(DateTime.UtcNow.Ticks);
+            this.filterToDateTime.ValueChanged += new System.EventHandler(this.filterToDateTime_ValueChanged);
             // 
             // labelFilterFrom
             // 
@@ -210,6 +219,7 @@
             this.radioButtonAll.TabStop = true;
             this.radioButtonAll.Text = "All";
             this.radioButtonAll.UseVisualStyleBackColor = true;
+            this.radioButtonAll.CheckedChanged += new System.EventHandler(this.radioButtonAll_CheckedChanged);
             // 
             // radioButtonIncome
             // 
@@ -220,6 +230,7 @@
             this.radioButtonIncome.TabIndex = 8;
             this.radioButtonIncome.Text = "Income";
             this.radioButtonIncome.UseVisualStyleBackColor = true;
+            this.radioButtonIncome.CheckedChanged += new System.EventHandler(this.radioButtonIncome_CheckedChanged);
             // 
             // radioButtonExpenses
             // 
@@ -230,6 +241,7 @@
             this.radioButtonExpenses.TabIndex = 9;
             this.radioButtonExpenses.Text = "Expenses";
             this.radioButtonExpenses.UseVisualStyleBackColor = true;
+            this.radioButtonExpenses.CheckedChanged += new System.EventHandler(this.radioButtonExpenses_CheckedChanged);
             // 
             // labelFilterByType
             // 
@@ -256,6 +268,7 @@
             this.comboBoxCategories.Name = "comboBoxCategories";
             this.comboBoxCategories.Size = new System.Drawing.Size(217, 23);
             this.comboBoxCategories.TabIndex = 12;
+            this.comboBoxCategories.SelectedIndexChanged += new System.EventHandler(this.comboBoxCategories_SelectedIndexChanged);
             // 
             // labelActions
             // 
@@ -295,7 +308,6 @@
             this.listViewEntries.TabIndex = 15;
             this.listViewEntries.UseCompatibleStateImageBehavior = false;
             this.listViewEntries.View = System.Windows.Forms.View.Details;
-            this.listViewEntries.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // columnHeaderTitle
             // 
@@ -325,7 +337,6 @@
             this.contextMenuStripEntry.Name = "contextMenuStripEntry";
             this.contextMenuStripEntry.Size = new System.Drawing.Size(108, 48);
             this.contextMenuStripEntry.Text = "Entry Context Menu";
-            this.contextMenuStripEntry.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // editToolStripMenuItem
             // 
@@ -379,7 +390,7 @@
 
         private MenuStrip menuStrip;
         private ToolStripMenuItem fileMenu;
-        private ToolStripMenuItem saveFileMenuItem;
+        private ToolStripMenuItem saveAsFileMenuItem;
         private ToolStripMenuItem categoriesMenu;
         private ToolStripMenuItem addCategoriesMenuItem;
         private ToolStripMenuItem editCategoriesMenuItem;
@@ -409,5 +420,6 @@
         private ContextMenuStrip contextMenuStripEntry;
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem openMenuItem;
     }
 }

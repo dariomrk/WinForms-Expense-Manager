@@ -14,6 +14,23 @@ namespace WinForms_Expense_Manager.Classes
         public string Description { get; set; }
         public decimal Value { get; set; }
         public Guid CategoryId { get; set; }
+
+        [JsonIgnore]
+        public bool IsExpense
+        {
+            get
+            {
+                return Value < 0;
+            }
+        }
+        [JsonIgnore]
+        public bool IsIncome
+        {
+            get
+            {
+                return Value > 0;
+            }
+        }
         #endregion
 
         #region Constructors
