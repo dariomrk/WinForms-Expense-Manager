@@ -91,13 +91,13 @@
             // saveAsFileMenuItem
             // 
             this.saveAsFileMenuItem.Name = "saveAsFileMenuItem";
-            this.saveAsFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsFileMenuItem.Size = new System.Drawing.Size(112, 22);
             this.saveAsFileMenuItem.Text = "Save as";
             // 
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openMenuItem.Size = new System.Drawing.Size(112, 22);
             this.openMenuItem.Text = "Open";
             // 
             // categoriesMenu
@@ -113,19 +113,19 @@
             // addCategoriesMenuItem
             // 
             this.addCategoriesMenuItem.Name = "addCategoriesMenuItem";
-            this.addCategoriesMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addCategoriesMenuItem.Size = new System.Drawing.Size(117, 22);
             this.addCategoriesMenuItem.Text = "Add";
             // 
             // editCategoriesMenuItem
             // 
             this.editCategoriesMenuItem.Name = "editCategoriesMenuItem";
-            this.editCategoriesMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCategoriesMenuItem.Size = new System.Drawing.Size(117, 22);
             this.editCategoriesMenuItem.Text = "Edit";
             // 
             // removeCategoriesMenuItem
             // 
             this.removeCategoriesMenuItem.Name = "removeCategoriesMenuItem";
-            this.removeCategoriesMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeCategoriesMenuItem.Size = new System.Drawing.Size(117, 22);
             this.removeCategoriesMenuItem.Text = "Remove";
             // 
             // moreMenu
@@ -140,13 +140,13 @@
             // exportMoreMenuItem
             // 
             this.exportMoreMenuItem.Name = "exportMoreMenuItem";
-            this.exportMoreMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportMoreMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exportMoreMenuItem.Text = "Export";
             // 
             // optionsMoreMenuItem
             // 
             this.optionsMoreMenuItem.Name = "optionsMoreMenuItem";
-            this.optionsMoreMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsMoreMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsMoreMenuItem.Text = "Options";
             // 
             // filterFromDateTime
@@ -339,19 +339,20 @@
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextMenuStripEntry.Name = "contextMenuStripEntry";
-            this.contextMenuStripEntry.Size = new System.Drawing.Size(108, 48);
+            this.contextMenuStripEntry.Size = new System.Drawing.Size(181, 70);
             this.contextMenuStripEntry.Text = "Entry Context Menu";
+            this.contextMenuStripEntry.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripEntry_Opening);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
             // labelSummary

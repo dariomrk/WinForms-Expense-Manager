@@ -196,6 +196,12 @@ namespace WinForms_Expense_Manager
         {
             PopulateListViewEntries();
         }
+
+        private void contextMenuStripEntry_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(listViewEntries.SelectedItems.Count < 1) e.Cancel = true;
+        }
         #endregion
+
     }
 }
