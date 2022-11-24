@@ -1,4 +1,5 @@
-﻿using WinForms_Expense_Manager.Classes;
+﻿using System.Text.Json.Serialization;
+using WinForms_Expense_Manager.Classes;
 
 namespace WinForms_Expense_Manager.Schemas
 {
@@ -9,5 +10,6 @@ namespace WinForms_Expense_Manager.Schemas
     {
         public List<Entry>? Entries { get; set; }
         public Dictionary<Guid, string>? Categories { get; set; }
+        public string? CurrencySign { get; set; }
     }
 }

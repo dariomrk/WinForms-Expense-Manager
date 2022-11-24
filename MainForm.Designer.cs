@@ -62,6 +62,8 @@
             this.contextMenuStripEntry = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelSummary = new System.Windows.Forms.Label();
+            this.labelVisibleSummary = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.contextMenuStripEntry.SuspendLayout();
             this.SuspendLayout();
@@ -89,13 +91,13 @@
             // saveAsFileMenuItem
             // 
             this.saveAsFileMenuItem.Name = "saveAsFileMenuItem";
-            this.saveAsFileMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveAsFileMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsFileMenuItem.Text = "Save as";
             // 
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.openMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openMenuItem.Text = "Open";
             // 
             // categoriesMenu
@@ -111,19 +113,19 @@
             // addCategoriesMenuItem
             // 
             this.addCategoriesMenuItem.Name = "addCategoriesMenuItem";
-            this.addCategoriesMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.addCategoriesMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addCategoriesMenuItem.Text = "Add";
             // 
             // editCategoriesMenuItem
             // 
             this.editCategoriesMenuItem.Name = "editCategoriesMenuItem";
-            this.editCategoriesMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.editCategoriesMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editCategoriesMenuItem.Text = "Edit";
             // 
             // removeCategoriesMenuItem
             // 
             this.removeCategoriesMenuItem.Name = "removeCategoriesMenuItem";
-            this.removeCategoriesMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.removeCategoriesMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removeCategoriesMenuItem.Text = "Remove";
             // 
             // moreMenu
@@ -138,13 +140,13 @@
             // exportMoreMenuItem
             // 
             this.exportMoreMenuItem.Name = "exportMoreMenuItem";
-            this.exportMoreMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exportMoreMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportMoreMenuItem.Text = "Export";
             // 
             // optionsMoreMenuItem
             // 
             this.optionsMoreMenuItem.Name = "optionsMoreMenuItem";
-            this.optionsMoreMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsMoreMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsMoreMenuItem.Text = "Options";
             // 
             // filterFromDateTime
@@ -154,7 +156,7 @@
             this.filterFromDateTime.Name = "filterFromDateTime";
             this.filterFromDateTime.Size = new System.Drawing.Size(222, 23);
             this.filterFromDateTime.TabIndex = 0;
-            this.filterFromDateTime.Value = new System.DateTime(DateTime.UtcNow.AddMonths(-1).Ticks);
+            this.filterFromDateTime.Value = new System.DateTime(2001, 1, 1, 0, 0, 0, 0);
             this.filterFromDateTime.ValueChanged += new System.EventHandler(this.filterFromDateTime_ValueChanged);
             // 
             // filterToDateTime
@@ -164,7 +166,7 @@
             this.filterToDateTime.Name = "filterToDateTime";
             this.filterToDateTime.Size = new System.Drawing.Size(222, 23);
             this.filterToDateTime.TabIndex = 2;
-            this.filterToDateTime.Value = new System.DateTime(DateTime.UtcNow.Ticks);
+            this.filterToDateTime.Value = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
             this.filterToDateTime.ValueChanged += new System.EventHandler(this.filterToDateTime_ValueChanged);
             // 
             // labelFilterFrom
@@ -274,7 +276,7 @@
             // 
             this.labelActions.AutoSize = true;
             this.labelActions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelActions.Location = new System.Drawing.Point(531, 344);
+            this.labelActions.Location = new System.Drawing.Point(526, 335);
             this.labelActions.Name = "labelActions";
             this.labelActions.Size = new System.Drawing.Size(61, 21);
             this.labelActions.TabIndex = 13;
@@ -282,7 +284,7 @@
             // 
             // buttonAddNewEntry
             // 
-            this.buttonAddNewEntry.Location = new System.Drawing.Point(531, 377);
+            this.buttonAddNewEntry.Location = new System.Drawing.Point(532, 359);
             this.buttonAddNewEntry.Name = "buttonAddNewEntry";
             this.buttonAddNewEntry.Size = new System.Drawing.Size(217, 57);
             this.buttonAddNewEntry.TabIndex = 14;
@@ -292,6 +294,8 @@
             // 
             // listViewEntries
             // 
+            this.listViewEntries.Alignment = System.Windows.Forms.ListViewAlignment.Default;
+            this.listViewEntries.AutoArrange = false;
             this.listViewEntries.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderTitle,
             this.columnHeaderValue,
@@ -304,7 +308,7 @@
             this.listViewEntries.Location = new System.Drawing.Point(12, 27);
             this.listViewEntries.MultiSelect = false;
             this.listViewEntries.Name = "listViewEntries";
-            this.listViewEntries.Size = new System.Drawing.Size(508, 407);
+            this.listViewEntries.Size = new System.Drawing.Size(508, 389);
             this.listViewEntries.TabIndex = 15;
             this.listViewEntries.UseCompatibleStateImageBehavior = false;
             this.listViewEntries.View = System.Windows.Forms.View.Details;
@@ -350,11 +354,31 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
+            // labelSummary
+            // 
+            this.labelSummary.AutoSize = true;
+            this.labelSummary.Location = new System.Drawing.Point(12, 419);
+            this.labelSummary.Name = "labelSummary";
+            this.labelSummary.Size = new System.Drawing.Size(61, 15);
+            this.labelSummary.TabIndex = 16;
+            this.labelSummary.Text = "Summary:";
+            // 
+            // labelVisibleSummary
+            // 
+            this.labelVisibleSummary.AutoSize = true;
+            this.labelVisibleSummary.Location = new System.Drawing.Point(12, 436);
+            this.labelVisibleSummary.Name = "labelVisibleSummary";
+            this.labelVisibleSummary.Size = new System.Drawing.Size(102, 15);
+            this.labelVisibleSummary.TabIndex = 17;
+            this.labelVisibleSummary.Text = "Filtered summary:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(761, 446);
+            this.ClientSize = new System.Drawing.Size(761, 457);
+            this.Controls.Add(this.labelVisibleSummary);
+            this.Controls.Add(this.labelSummary);
             this.Controls.Add(this.listViewEntries);
             this.Controls.Add(this.buttonAddNewEntry);
             this.Controls.Add(this.labelActions);
@@ -421,5 +445,7 @@
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
         private ToolStripMenuItem openMenuItem;
+        private Label labelSummary;
+        private Label labelVisibleSummary;
     }
 }

@@ -77,9 +77,9 @@
             this.labelValue.AutoSize = true;
             this.labelValue.Location = new System.Drawing.Point(12, 167);
             this.labelValue.Name = "labelValue";
-            this.labelValue.Size = new System.Drawing.Size(38, 15);
+            this.labelValue.Size = new System.Drawing.Size(46, 15);
             this.labelValue.TabIndex = 5;
-            this.labelValue.Text = "Value:";
+            this.labelValue.Text = "* Value:";
             // 
             // textBoxValue
             // 
@@ -101,9 +101,9 @@
             this.labelCategory.AutoSize = true;
             this.labelCategory.Location = new System.Drawing.Point(12, 226);
             this.labelCategory.Name = "labelCategory";
-            this.labelCategory.Size = new System.Drawing.Size(90, 15);
+            this.labelCategory.Size = new System.Drawing.Size(98, 15);
             this.labelCategory.TabIndex = 13;
-            this.labelCategory.Text = "Select category:";
+            this.labelCategory.Text = "* Select category:";
             // 
             // buttonAddNewEntry
             // 
@@ -113,6 +113,7 @@
             this.buttonAddNewEntry.TabIndex = 15;
             this.buttonAddNewEntry.Text = "Done";
             this.buttonAddNewEntry.UseVisualStyleBackColor = true;
+            this.buttonAddNewEntry.Click += new System.EventHandler(this.buttonAddNewEntry_Click);
             // 
             // AddNewEntryForm
             // 
@@ -134,6 +135,7 @@
             this.Name = "AddNewEntryForm";
             this.Text = "Add New Entry";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.AddNewEntryForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

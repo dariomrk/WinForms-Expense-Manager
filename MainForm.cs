@@ -6,14 +6,16 @@ namespace WinForms_Expense_Manager
     public partial class MainForm : Form
     {
         #region Fields
-        public readonly ExpenseManager Manager = new();
+        private readonly ExpenseManager _manager = new();
         private readonly List<Predicate<Entry>> _filters;
+        private (decimal Income, decimal Expense) _total;
+        private (decimal Income, decimal Expense) _visibleTotal;
         #endregion
 
         #region Constructor
         public MainForm()
         {
-            Manager.LoadData();
+            _manager.LoadData();
             InitializeComponent();
 
             // ! Register filters
@@ -26,11 +28,10 @@ namespace WinForms_Expense_Manager
         }
         #endregion
 
-        #region Filter Methods
         private List<Entry> ApplyFilters()
         {
             List<Entry> output = new();
-            foreach (var entry in Manager.Entries)
+            foreach (var entry in _manager.Entries)
             {
                 bool pass = true;
                 foreach (var filter in _filters)
@@ -40,9 +41,28 @@ namespace WinForms_Expense_Manager
                 if (pass)
                     output.Add(entry);
             }
+            _visibleTotal = CalculateTotal(output);
+            UpdateVisibleSummary();
             return output;
         }
+        private (decimal Income, decimal Expense) CalculateTotal(List<Entry> entries)
+        {
+            decimal income = 0, expense = 0;
+            foreach(var e in entries)
+            {
+                if (e.IsIncome)
+                {
+                    income += e.Value;
+                }
+                if (e.IsExpense)
+                {
+                    expense += e.Value;
+                }
+            }
+            return (income, expense);
+        }
 
+        #region Filter Methods
         private bool DateRangeFilter(Entry e)
         {
             if (!checkBoxFilterDateTime.Checked)
@@ -68,7 +88,7 @@ namespace WinForms_Expense_Manager
             if (comboBoxCategories.SelectedIndex == 0) // Show all categories
                 return true;
             string categoryName = comboBoxCategories.SelectedItem.ToString()!;
-            Manager.TryGetCategoryId(categoryName, out Guid id);
+            _manager.TryGetCategoryId(categoryName, out Guid id);
             if (e.CategoryId == id)
                 return true;
             return false;
@@ -78,18 +98,35 @@ namespace WinForms_Expense_Manager
         #region UI Utilities
         private void PopulateListViewEntries()
         {
-            var entries = ApplyFilters();
+            List<Entry> entries = ApplyFilters();
 
             listViewEntries.Items.Clear();
-            foreach (var entry in entries)
+            for (int i = entries.Count-1; i>=0; i--)
             {
+                Entry? entry = entries[i];
                 var item = new ListViewItem(entry.Title);
                 item.SubItems.Add(entry.Value.ToString());
                 item.SubItems.Add(entry.CreatedAt.ToString());
-                Manager.TryGetCategoryName(entry.CategoryId, out string categoryName);
+                _manager.TryGetCategoryName(entry.CategoryId, out string categoryName);
                 item.SubItems.Add(categoryName);
                 listViewEntries.Items.Add(item);
             }
+        }
+
+        private void UpdateSummary()
+        {
+            labelSummary.Text = $"Summary: " +
+                $"\u25bc {_total.Expense}{_manager.CurrencySign}   " +
+                $"\u25b2 {_total.Income}{_manager.CurrencySign}   " +
+                $"\u03a3 {_total.Income + _total.Expense}{_manager.CurrencySign}";
+        }
+
+        private void UpdateVisibleSummary()
+        {
+            labelVisibleSummary.Text = $"Filtered summary: " +
+                $"\u25bc {_visibleTotal.Expense}{_manager.CurrencySign}   " +
+                $"\u25b2{_visibleTotal.Income}{_manager.CurrencySign}   " +
+                $"\u03a3 {_visibleTotal.Income + _visibleTotal.Expense}{_manager.CurrencySign}";
         }
         #endregion
 
@@ -99,10 +136,17 @@ namespace WinForms_Expense_Manager
             // Initially populate the comboBoxCategories
             comboBoxCategories.Items.Add("Show all");
             comboBoxCategories.SelectedIndex = 0;
-            comboBoxCategories.Items.AddRange(Manager.Categories.Values.ToArray());
+            comboBoxCategories.Items.AddRange(_manager.Categories.Values.ToArray());
+
+            // Init DateTime pickers
+            filterFromDateTime.Value = new DateTime(DateTime.UtcNow.AddMonths(-1).Ticks);
+            filterToDateTime.Value = new DateTime(DateTime.UtcNow.Ticks);
 
             // Initially populate the listViewEntries
             PopulateListViewEntries();
+            // Initially set up summary
+            _total = CalculateTotal(_manager.Entries);
+            UpdateSummary();
         }
 
         private void checkBoxFilterDateTime_CheckedChanged(object sender, EventArgs e)
@@ -117,8 +161,10 @@ namespace WinForms_Expense_Manager
 
         private void buttonAddNewEntry_Click(object sender, EventArgs e)
         {
-            var addNewEntryForm = new AddNewEntryForm();
-            addNewEntryForm.Show();
+            var addNewEntryForm = new AddNewEntryForm(_manager);
+            addNewEntryForm.ShowDialog();
+            PopulateListViewEntries();
+            UpdateSummary();
         }
 
         private void comboBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -151,6 +197,5 @@ namespace WinForms_Expense_Manager
             PopulateListViewEntries();
         }
         #endregion
-
     }
 }

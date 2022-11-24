@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.Json;
 using WinForms_Expense_Manager.Schemas;
-using System.Reflection;
 
 namespace WinForms_Expense_Manager.Classes
 {
@@ -14,7 +13,11 @@ namespace WinForms_Expense_Manager.Classes
         #region Fields
         public readonly string DataFileName = "expense-manager-data.json";
         private List<Entry> _entries = new();
-        private Dictionary<Guid, string> _categories = new();
+        private Dictionary<Guid, string> _categories = new()
+        {
+            {Guid.Empty, "No category"},
+        };
+        private string _currencySign = "$";
         #endregion
 
         #region Properties
@@ -28,12 +31,23 @@ namespace WinForms_Expense_Manager.Classes
         /// </summary>
         [JsonInclude]
         public Dictionary<Guid, string> Categories { get => new(_categories); }
+        [JsonInclude]
+        public string CurrencySign 
+        { 
+            get => _currencySign;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    return;
+                _currencySign = value;
+            }
+        }
         #endregion
 
         #region Constructors
         public ExpenseManager()
         {
-            _categories.Add(Guid.Empty, "No category");
+
         }
         #endregion
 
@@ -93,12 +107,13 @@ namespace WinForms_Expense_Manager.Classes
             string json = sr.ReadToEnd();
 
             ExpenseManagerDataSchema? data = JsonSerializer.Deserialize<ExpenseManagerDataSchema>(json);
-            if(data == null || data.Entries == null || data.Categories == null)
+            if(data == null || data.Entries == null || data.Categories == null || data.CurrencySign == null)
             {
                 return false;
             }
             _entries = new List<Entry>(data.Entries);
             _categories = new Dictionary<Guid,string>(data.Categories);
+            CurrencySign = data.CurrencySign;
             return true;
         }
 
