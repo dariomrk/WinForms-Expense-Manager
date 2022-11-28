@@ -192,6 +192,33 @@ namespace WinForms_Expense_Manager.Classes
             TryFindEntry(id, out Entry e);
             return _entries.Remove(e);
         }
+
+        public bool RenameCategory(Guid categoryId, string newName)
+        {
+            if (!_categories.ContainsKey(categoryId))
+                return false;
+
+            if(categoryId == Guid.Empty)
+                return false;
+
+            _categories[categoryId] = newName;
+            return true;
+        }
+
+        public bool RemoveCategory(Guid categoryId)
+        {
+            if (!_categories.ContainsKey(categoryId))
+                return false;
+            foreach(var entry in _entries)
+            {
+                if(entry.CategoryId == categoryId)
+                {
+                    entry.CategoryId = Guid.Empty;
+                }
+            }
+            _categories.Remove(categoryId);
+            return true;
+        }
         #endregion
     }
 }

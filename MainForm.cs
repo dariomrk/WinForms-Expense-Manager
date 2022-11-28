@@ -1,4 +1,3 @@
-using System.Windows.Forms;
 using WinForms_Expense_Manager.Classes;
 using WinForms_Expense_Manager.Forms;
 
@@ -107,7 +106,6 @@ namespace WinForms_Expense_Manager
             }
             Text = "Expense Manager";
         }
-
         private void PopulateListViewEntries()
         {
             List<Entry> entries = ApplyFilters();
@@ -128,7 +126,13 @@ namespace WinForms_Expense_Manager
                 listViewEntries.Items.Add(item);
             }
         }
-
+        private void PopulateComboBoxCategories()
+        {
+            comboBoxCategories.Items.Clear();
+            comboBoxCategories.Items.Add("Show all");
+            comboBoxCategories.SelectedIndex = 0;
+            comboBoxCategories.Items.AddRange(_manager.Categories.Values.ToArray());
+        }
         private void UpdateSummary()
         {
             labelSummary.Text = $"Summary: " +
@@ -145,7 +149,7 @@ namespace WinForms_Expense_Manager
                 $"\u03a3 {_visibleTotal.Income + _visibleTotal.Expense}{_manager.CurrencySign}";
         }
 
-        private void UpdateAll()
+        private void UpdateListViewAndSummary()
         {
             PopulateListViewEntries();
             _total = CalculateTotal(_manager.Entries);
@@ -156,16 +160,11 @@ namespace WinForms_Expense_Manager
         #region Events
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // Initially populate the comboBoxCategories
-            comboBoxCategories.Items.Add("Show all");
-            comboBoxCategories.SelectedIndex = 0;
-            comboBoxCategories.Items.AddRange(_manager.Categories.Values.ToArray());
-
+            PopulateComboBoxCategories();
             // Init DateTime pickers
             filterFromDateTime.Value = new DateTime(DateTime.UtcNow.AddMonths(-1).Ticks);
             filterToDateTime.Value = new DateTime(DateTime.UtcNow.Ticks);
-
-            UpdateAll();
+            UpdateListViewAndSummary();
         }
 
         private void checkBoxFilterDateTime_CheckedChanged(object sender, EventArgs e)
@@ -182,7 +181,7 @@ namespace WinForms_Expense_Manager
         {
             var addNewEntryForm = new AddNewEntryForm(_manager);
             addNewEntryForm.ShowDialog();
-            UpdateAll();
+            UpdateListViewAndSummary();
             _manager.SaveData();
         }
 
@@ -231,7 +230,7 @@ namespace WinForms_Expense_Manager
 
             EditExistingEntryForm editExistingEntryForm = new(_manager, id);
             editExistingEntryForm.ShowDialog();
-            UpdateAll();
+            UpdateListViewAndSummary();
             _manager.SaveData();
         }
 
@@ -255,7 +254,7 @@ namespace WinForms_Expense_Manager
             }
 
             _manager.RemoveEntry((Guid)listViewEntries.SelectedItems[0].Tag);
-            UpdateAll();
+            UpdateListViewAndSummary();
             _manager.SaveData();
         }
 
@@ -280,7 +279,7 @@ namespace WinForms_Expense_Manager
                 MessageBoxIcon.Information
                 );
             }
-            UpdateAll();
+            UpdateListViewAndSummary();
             UpdateTitle();
         }
 
@@ -304,11 +303,21 @@ namespace WinForms_Expense_Manager
                 MessageBoxIcon.Information
                 );
             }
-            UpdateAll();
+            UpdateListViewAndSummary();
             UpdateTitle();
         }
         #endregion
 
         #endregion
+
+        // TODO Move to events region
+        private void manageCategoriesMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageCategoriesForm manageCategoriesForm = new(_manager);
+            manageCategoriesForm.ShowDialog();
+            PopulateComboBoxCategories();
+            UpdateListViewAndSummary();
+            _manager.SaveData();
+        }
     }
 }
