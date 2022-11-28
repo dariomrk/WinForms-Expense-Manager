@@ -64,6 +64,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelSummary = new System.Windows.Forms.Label();
             this.labelVisibleSummary = new System.Windows.Forms.Label();
+            this.aboutMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.contextMenuStripEntry.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +74,8 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.categoriesMenu,
-            this.moreMenu});
+            this.moreMenu,
+            this.aboutMenu});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(761, 24);
@@ -382,6 +384,13 @@
             this.labelVisibleSummary.TabIndex = 17;
             this.labelVisibleSummary.Text = "Filtered summary:";
             // 
+            // aboutMenu
+            // 
+            this.aboutMenu.Name = "aboutMenu";
+            this.aboutMenu.Size = new System.Drawing.Size(52, 20);
+            this.aboutMenu.Text = "About";
+            this.aboutMenu.Click += new System.EventHandler(this.aboutMenu_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -457,5 +466,6 @@
         private Label labelVisibleSummary;
         private ToolStripMenuItem showDescriptionMenuItem;
         private ToolStripMenuItem exportAsCsvMoreMenuItem;
+        private ToolStripMenuItem aboutMenu;
     }
 }

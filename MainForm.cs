@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using WinForms_Expense_Manager.Classes;
@@ -368,6 +369,35 @@ namespace WinForms_Expense_Manager
             optionsForm.ShowDialog();
             UpdateListViewAndSummary();
             _manager.SaveData();
+        }
+
+        private void aboutMenu_Click(object sender, EventArgs e)
+        {
+            if(DialogResult.Yes == MessageBox.Show("This action will open the application GitHub repository in a web browser.\n" +
+                "Do you want to continue?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question))
+            {
+                try
+                {
+                    ProcessStartInfo processStartInfo = new()
+                    {
+                        FileName = "https://github.com/dariomrk/WinForms-Expense-Manager",
+                        UseShellExecute = true,
+                    };
+                    Process.Start(processStartInfo);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Cannot open a browser instance.\n" +
+                        "You can open the link manually:\n" +
+                        "https://github.com/dariomrk/WinForms-Expense-Manager",
+                "Warning",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+                }
+            }
         }
     }
 }
