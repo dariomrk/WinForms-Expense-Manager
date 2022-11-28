@@ -22,7 +22,8 @@ namespace WinForms_Expense_Manager.Forms
 
         private void ShowDescriptionForm_Load(object sender, EventArgs e)
         {
-            richTextBoxDescription.Text = _description;
+            richTextBoxDescription.Text = String.IsNullOrEmpty(_description) ?
+                "No description available." : _description;
         }
     }
 }

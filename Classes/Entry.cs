@@ -47,7 +47,7 @@ namespace WinForms_Expense_Manager.Classes
             CategoryId = Guid.Empty;
         }
         /// <summary>
-        /// Creates an Entry object.
+        /// Creates an Entry object based on previously used data.
         /// </summary>
         [JsonConstructor]
         public Entry(Guid id, DateTime createdAt, string title, string description, decimal value, Guid categoryId)

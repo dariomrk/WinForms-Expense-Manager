@@ -19,7 +19,6 @@ namespace WinForms_Expense_Manager
             _manager.LoadData();
             InitializeComponent();
 
-            // ! Register filters
             _filters = new()
             {
                 DateRangeFilter,
@@ -121,7 +120,7 @@ namespace WinForms_Expense_Manager
             {
                 Entry? entry = entries[i];
                 var item = new ListViewItem(entry.Title);
-                item.SubItems.Add(entry.Value.ToString());
+                item.SubItems.Add($"{entry.Value} {_manager.CurrencySign}");
                 item.SubItems.Add(entry.CreatedAt.ToString());
                 _manager.TryGetCategoryName(entry.CategoryId, out string categoryName);
                 item.SubItems.Add(categoryName);
