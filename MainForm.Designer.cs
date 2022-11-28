@@ -63,6 +63,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelSummary = new System.Windows.Forms.Label();
             this.labelVisibleSummary = new System.Windows.Forms.Label();
+            this.exportAsCsvMoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.contextMenuStripEntry.SuspendLayout();
             this.SuspendLayout();
@@ -90,14 +91,14 @@
             // saveAsFileMenuItem
             // 
             this.saveAsFileMenuItem.Name = "saveAsFileMenuItem";
-            this.saveAsFileMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.saveAsFileMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsFileMenuItem.Text = "Save as";
             this.saveAsFileMenuItem.Click += new System.EventHandler(this.saveAsFileMenuItem_Click);
             // 
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.openMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openMenuItem.Text = "Open";
             this.openMenuItem.Click += new System.EventHandler(this.openMenuItem_Click);
             // 
@@ -112,7 +113,7 @@
             // manageCategoriesMenuItem
             // 
             this.manageCategoriesMenuItem.Name = "manageCategoriesMenuItem";
-            this.manageCategoriesMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manageCategoriesMenuItem.Size = new System.Drawing.Size(117, 22);
             this.manageCategoriesMenuItem.Text = "Manage";
             this.manageCategoriesMenuItem.Click += new System.EventHandler(this.manageCategoriesMenuItem_Click);
             // 
@@ -127,14 +128,16 @@
             // 
             // exportMoreMenuItem
             // 
+            this.exportMoreMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAsCsvMoreMenuItem});
             this.exportMoreMenuItem.Name = "exportMoreMenuItem";
-            this.exportMoreMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exportMoreMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportMoreMenuItem.Text = "Export";
             // 
             // optionsMoreMenuItem
             // 
             this.optionsMoreMenuItem.Name = "optionsMoreMenuItem";
-            this.optionsMoreMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsMoreMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsMoreMenuItem.Text = "Options";
             // 
             // filterFromDateTime
@@ -371,6 +374,13 @@
             this.labelVisibleSummary.TabIndex = 17;
             this.labelVisibleSummary.Text = "Filtered summary:";
             // 
+            // exportAsCsvMoreMenuItem
+            // 
+            this.exportAsCsvMoreMenuItem.Name = "exportAsCsvMoreMenuItem";
+            this.exportAsCsvMoreMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCsvMoreMenuItem.Text = "As .csv";
+            this.exportAsCsvMoreMenuItem.Click += new System.EventHandler(this.exportAsCsvMoreMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -445,5 +455,6 @@
         private Label labelSummary;
         private Label labelVisibleSummary;
         private ToolStripMenuItem showDescriptionMenuItem;
+        private ToolStripMenuItem exportAsCsvMoreMenuItem;
     }
 }

@@ -1,3 +1,5 @@
+using System.IO;
+using System.Text.Json;
 using WinForms_Expense_Manager.Classes;
 using WinForms_Expense_Manager.Forms;
 
@@ -99,13 +101,14 @@ namespace WinForms_Expense_Manager
         #region UI Utilities
         private void UpdateTitle()
         {
-            if(_manager.DefaultDataFilePath != _manager.WorkingDataFilePath)
+            if (_manager.DefaultDataFilePath != _manager.WorkingDataFilePath)
             {
                 Text = $"Expense Manager @ {_manager.WorkingDataFilePath}";
                 return;
             }
             Text = "Expense Manager";
         }
+
         private void PopulateListViewEntries()
         {
             List<Entry> entries = ApplyFilters();
@@ -126,6 +129,7 @@ namespace WinForms_Expense_Manager
                 listViewEntries.Items.Add(item);
             }
         }
+
         private void PopulateComboBoxCategories()
         {
             comboBoxCategories.Items.Clear();
@@ -133,6 +137,7 @@ namespace WinForms_Expense_Manager
             comboBoxCategories.SelectedIndex = 0;
             comboBoxCategories.Items.AddRange(_manager.Categories.Values.ToArray());
         }
+
         private void UpdateSummary()
         {
             labelSummary.Text = $"Summary: " +
@@ -306,11 +311,7 @@ namespace WinForms_Expense_Manager
             UpdateListViewAndSummary();
             UpdateTitle();
         }
-        #endregion
 
-        #endregion
-
-        // TODO Move to events region
         private void manageCategoriesMenuItem_Click(object sender, EventArgs e)
         {
             ManageCategoriesForm manageCategoriesForm = new(_manager);
@@ -318,6 +319,47 @@ namespace WinForms_Expense_Manager
             PopulateComboBoxCategories();
             UpdateListViewAndSummary();
             _manager.SaveData();
+        }
+        #endregion
+
+        #endregion
+
+        private void exportAsCsvMoreMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new()
+            {
+                InitialDirectory = Environment.CurrentDirectory,
+                Filter = "csv files (*.csv) | *.csv",
+                FileName = "expense-manager-export.csv",
+                OverwritePrompt = true,
+                AddExtension = true,
+                DefaultExt = ".csv",
+                Title = "Export data"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                _manager.SaveDataTo(saveFileDialog.FileName);
+                MessageBox.Show($"Successfully saved file to: {saveFileDialog.FileName}.",
+                "Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+                );
+
+                string data = "Title, Description, Value, Category name, Created at\n";
+                foreach (var entry in _manager.Entries)
+                {
+                    _manager.TryGetCategoryName(entry.CategoryId, out string categoryName);
+                    data += ($"{entry.Title}," +
+                        $"{(string.IsNullOrWhiteSpace(entry.Description) ? "No description" : entry.Description)}," +
+                        $"{entry.Value}," +
+                        $"{categoryName}," +
+                        $"{entry.CreatedAt}" +
+                        $"\n");
+                }
+                using StreamWriter sw = new(saveFileDialog.FileName);
+                sw.Write(data);
+            }
         }
     }
 }
