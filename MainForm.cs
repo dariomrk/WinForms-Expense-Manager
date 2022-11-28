@@ -361,5 +361,13 @@ namespace WinForms_Expense_Manager
                 sw.Write(data);
             }
         }
+
+        private void optionsMoreMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsForm optionsForm = new(_manager);
+            optionsForm.ShowDialog();
+            UpdateListViewAndSummary();
+            _manager.SaveData();
+        }
     }
 }

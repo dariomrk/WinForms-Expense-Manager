@@ -37,6 +37,7 @@
             this.manageCategoriesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moreMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsCsvMoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsMoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterFromDateTime = new System.Windows.Forms.DateTimePicker();
             this.filterToDateTime = new System.Windows.Forms.DateTimePicker();
@@ -63,7 +64,6 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelSummary = new System.Windows.Forms.Label();
             this.labelVisibleSummary = new System.Windows.Forms.Label();
-            this.exportAsCsvMoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.contextMenuStripEntry.SuspendLayout();
             this.SuspendLayout();
@@ -91,14 +91,14 @@
             // saveAsFileMenuItem
             // 
             this.saveAsFileMenuItem.Name = "saveAsFileMenuItem";
-            this.saveAsFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsFileMenuItem.Size = new System.Drawing.Size(112, 22);
             this.saveAsFileMenuItem.Text = "Save as";
             this.saveAsFileMenuItem.Click += new System.EventHandler(this.saveAsFileMenuItem_Click);
             // 
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openMenuItem.Size = new System.Drawing.Size(112, 22);
             this.openMenuItem.Text = "Open";
             this.openMenuItem.Click += new System.EventHandler(this.openMenuItem_Click);
             // 
@@ -134,11 +134,19 @@
             this.exportMoreMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportMoreMenuItem.Text = "Export";
             // 
+            // exportAsCsvMoreMenuItem
+            // 
+            this.exportAsCsvMoreMenuItem.Name = "exportAsCsvMoreMenuItem";
+            this.exportAsCsvMoreMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportAsCsvMoreMenuItem.Text = "As .csv";
+            this.exportAsCsvMoreMenuItem.Click += new System.EventHandler(this.exportAsCsvMoreMenuItem_Click);
+            // 
             // optionsMoreMenuItem
             // 
             this.optionsMoreMenuItem.Name = "optionsMoreMenuItem";
             this.optionsMoreMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsMoreMenuItem.Text = "Options";
+            this.optionsMoreMenuItem.Click += new System.EventHandler(this.optionsMoreMenuItem_Click);
             // 
             // filterFromDateTime
             // 
@@ -373,13 +381,6 @@
             this.labelVisibleSummary.Size = new System.Drawing.Size(102, 15);
             this.labelVisibleSummary.TabIndex = 17;
             this.labelVisibleSummary.Text = "Filtered summary:";
-            // 
-            // exportAsCsvMoreMenuItem
-            // 
-            this.exportAsCsvMoreMenuItem.Name = "exportAsCsvMoreMenuItem";
-            this.exportAsCsvMoreMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportAsCsvMoreMenuItem.Text = "As .csv";
-            this.exportAsCsvMoreMenuItem.Click += new System.EventHandler(this.exportAsCsvMoreMenuItem_Click);
             // 
             // MainForm
             // 
